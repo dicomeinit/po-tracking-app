@@ -1,0 +1,2 @@
+GROUP_NAME_VENDOR = "Vendor"
+GROUP_NAME_COMPANY = "Company"

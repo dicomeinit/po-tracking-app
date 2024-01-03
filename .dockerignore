@@ -1,0 +1,17 @@
+.mypy_cache
+.pytest_cache
+__pycache__/
+*.pyc
+.idea
+.venv
+venv*/
+.env
+
+!.gitignore
+!.dockerignore
+
+.coverage
+.reports
+
+.*
+env.local

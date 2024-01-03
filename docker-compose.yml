@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  cache:
+    image: "redis:latest"
+    expose:
+      - 6379
+
+  nginx:
+    build: ./operations/nginx
+    ports:
+      - "81:80"
+    depends_on:
+      - app
+
+  db:
+    image: "postgres:latest"
+    expose:
+      - 5432
+    env_file:
+      - env.local
+    volumes:
+      - pgdata:/var/lob/postgresql/data
+
+  app:
+    image: "smartavi-po-tracking-app:dev"
+    build:
+      dockerfile: operations/Dockerfile
+      context: .
+    expose:
+      - "8000"
+    volumes:
+      - .:/opt:z
+    env_file:
+      - env.local
+    links:
+      - db
+      - cache
+    command:
+#      - "gunicorn"
+#      - "app.wsgi"
+#      - "-b"
+#      - "0.0.0.0:8000"
+#      - "--reload"
+      - "python"
+      - "manage.py"
+      - "runserver"
+      - "0.0.0.0:8000"
+
+volumes:
+  pgdata:
